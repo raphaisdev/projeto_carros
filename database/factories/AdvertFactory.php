@@ -1,0 +1,20 @@
+<?php
+
+use Faker\Generator as Faker;
+
+$factory->define(App\Models\Advert::class, function (Faker $faker) {
+    return [
+        'user_id' => function () {
+            return factory(App\Models\User::class)->create()->id;
+        },
+        'car_model_id' => function () {
+            return factory(App\Models\CarModel::class)->create()->id;
+        },
+        'title' => $faker->text(100),
+        'description' => $faker->text(200),
+        'year' => $faker->year('now'),
+        'color' => $faker->colorName(),
+        'picture' => $faker->imageUrl(640,480),
+        'status'=> $faker->randomElement([0,1,2])
+    ];
+});
