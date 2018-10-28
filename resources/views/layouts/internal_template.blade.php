@@ -48,36 +48,19 @@
 </nav>
 
   <main role="main" class="container">
-
-  @forelse ($adverts as $advert)
-      @if ($loop->first)
-          <div class="card-deck">
-      @endif
-
-              <div class="card">
-                  <img class="card-img-top" src="{{$advert->picture}}" alt="{{$advert->title}}">
-                  <div class="card-body">
-                      <h5 class="card-title">{{$advert->title}}</h5>
-                      <p class="card-text">{{$advert->description}}</p>
-                  </div>
-                  <div class="card-footer">
-                      <span class="h3 float-left">R$ {{number_format($advert->value, 2, ',', '.')}}</span>
-                      <a href="/{{$advert->id}}" class="btn btn-primary float-right" role="button">Visitar {{$advert->id}}</a>
-                  </div>
+      <div class="card-deck">
+          <div class="card">
+              <img class="card-img-top" src="{{$advert->picture}}" alt="{{$advert->title}}">
+              <div class="card-body">
+                  <h5 class="card-title">{{$advert->title}}</h5>
+                  <p class="card-text">{{$advert->description}}</p>
               </div>
-
-      @if (($loop->index+1)%3==0 && !$loop->last)
+              <div class="card-footer">
+                  <span class="h3 float-left">R$ {{number_format($advert->value, 2, ',', '.')}}</span>
+                  <a href="/{{$advert->id}}" class="btn btn-primary float-right" role="button">Visitar {{$advert->id}}</a>
+              </div>
           </div>
-          <div class="card-deck">
-      @endif
-
-      @if($loop->last)
-          </div>
-      @endif
-
-  @empty
-      <p>Nenhum anúncio encontrado.</p>
-  @endforelse
+      </div>
   </main>
 
 </body>

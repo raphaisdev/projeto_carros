@@ -12,6 +12,7 @@ $factory->define(App\Models\Advert::class, function (Faker $faker) {
         },
         'title' => $faker->text(100),
         'description' => $faker->text(200),
+        'value' => $faker->randomFloat(2,1000,1000000),
         'year' => $faker->year('now'),
         'color' => $faker->colorName(),
         'picture' => $faker->imageUrl(640,480),

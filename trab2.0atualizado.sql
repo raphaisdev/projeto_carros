@@ -1,0 +1,10 @@
+BEGIN TRANSACTION;
+CREATE TABLE "users" ("id" integer not null primary key autoincrement, "name" varchar not null, "email" varchar not null, "password" varchar not null,"rg" integer not null, "cpf" integer not null, "gender" varchar not null, "remember_token" varchar null, "created_at" datetime null, "updated_at" datetime null);
+CREATE TABLE "password_resets" ("email" varchar not null, "token" varchar not null, "created_at" datetime null);
+CREATE TABLE "migrations" ("id" integer not null primary key autoincrement, "migration" varchar not null, "batch" integer not null);
+CREATE TABLE "car_models" ("id" integer not null primary key autoincrement, "car_brand_id" integer not null, "name" varchar not null, "created_at" datetime null, "updated_at" datetime null, foreign key("car_brand_id") references "car_brands"("id"));
+CREATE TABLE "car_brands" ("id" integer not null primary key autoincrement, "name" varchar not null, "created_at" datetime null, "updated_at" datetime null);
+CREATE TABLE "adverts" ("id" integer not null primary key autoincrement, "user_id" integer not null, "car_model_id" integer not null, "title" varchar not null, "description" text null, "year" varchar not null, "color" varchar not null, "picture" varchar not null, "status" varchar check ("status" in ('0', '1', '2')) not null default '0', "created_at" datetime null, "updated_at" datetime null, foreign key("user_id") references "users"("id"), foreign key("car_model_id") references "car_models"("id"));
+CREATE UNIQUE INDEX "users_email_unique" on "users" ("email");
+CREATE INDEX "password_resets_email_index" on "password_resets" ("email");
+COMMIT;

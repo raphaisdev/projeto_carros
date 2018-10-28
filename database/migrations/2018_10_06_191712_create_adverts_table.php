@@ -19,6 +19,7 @@ class CreateAdvertsTable extends Migration
             $table->unsignedInteger('car_model_id');
             $table->string('title');
             $table->text('description')->nullable();
+            $table->double('value', 10, 2)->nullable();
             $table->string('year',9);
             $table->string('color');
             $table->string('picture');

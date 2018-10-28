@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Advert;
 use Illuminate\Http\Request;
 
 class AdvertController extends Controller
@@ -11,9 +12,10 @@ class AdvertController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $adverts = Advert::with(['user'])->limit(9)->orderBy('created_at', 'desc')->get();
+        return view('layouts.home_template', ['adverts' => $adverts]);
     }
 
     /**
@@ -43,9 +45,9 @@ class AdvertController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($advertId)
     {
-        //
+        return view('layouts.internal_template', ['advert' => Advert::findOrFail($advertId)]);
     }
 
     /**

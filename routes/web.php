@@ -11,6 +11,5 @@
 |
 */
 
-Route::get('/', function () {
-    return view('layouts.home_template');
-});
+Route::get('/', 'AdvertController@index');
+Route::get('/{advertId}', 'AdvertController@show');
