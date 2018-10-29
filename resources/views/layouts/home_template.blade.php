@@ -6,7 +6,6 @@
         body {
             padding-top: 54px;
         }
-
         @media (min-width: 992px) {
             body {
                 padding-top: 56px;
@@ -32,12 +31,20 @@
             <li class="nav-item active">
                 <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Cadastrar-se</a>
+            @if(isset(Auth::user()->email))
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{Auth::user()->name}}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/logout">Sair</a>
+                </div>
             </li>
+            @else
             <li class="nav-item">
-                <a class="nav-link" href="#">Entrar</a>
+                <a class="nav-link" href="/login">Cadastrar-se / Entrar</a>
             </li>
+            @endif
         </ul>
         <form class="form-inline mt-2 mt-md-0" method="get">
             @csrf
@@ -57,12 +64,12 @@
               <div class="card">
                   <img class="card-img-top" src="{{$advert->picture}}" alt="{{$advert->title}}">
                   <div class="card-body">
-                      <h5 class="card-title">{{$advert->title}}</h5>
-                      <p class="card-text">{{$advert->description}}</p>
+                      <h5 class="card-title"><small class="text-muted">Ano: </small>{{$advert->year}} / <small class="text-muted">Cor: </small>{{$advert->color}}</h5>
+                      <p class="card-text">{{$advert->title}}</p>
                   </div>
                   <div class="card-footer">
                       <span class="h3 float-left">R$ {{number_format($advert->value, 2, ',', '.')}}</span>
-                      <a href="/{{$advert->id}}" class="btn btn-primary float-right" role="button">Visitar {{$advert->id}}</a>
+                      <a href="/{{$advert->id}}" class="btn btn-primary float-right" role="button">Visitar</a>
                   </div>
               </div>
 
@@ -79,6 +86,8 @@
       <p>Nenhum anúncio encontrado.</p>
   @endforelse
   </main>
-
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="js/bootstrap.js"></script>
 </body>
 </html>
