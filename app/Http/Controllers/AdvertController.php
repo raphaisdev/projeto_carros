@@ -14,8 +14,13 @@ class AdvertController extends Controller
      */
     public function index(Request $request)
     {
-        $adverts = Advert::with(['user'])->limit(9)->orderBy('created_at', 'desc')->get();
-        return view('layouts.home_template', ['adverts' => $adverts]);
+        $adverts = Advert::with(['user'])->limit(9)->orderBy('created_at', 'desc');
+
+        if($request->has('search') && strlen(trim($request->input('search'))) > 3){
+            $adverts = $adverts->where('title', 'like', '%'.$request->input('search').'%')
+                ->orWhere('description', 'like', '%'.$request->input('search').'%');
+        }
+        return view('pages.advert_list', ['adverts' => $adverts->get()]);
     }
 
     /**
@@ -47,7 +52,7 @@ class AdvertController extends Controller
      */
     public function show($advertId)
     {
-        return view('layouts.internal_template', ['advert' => Advert::findOrFail($advertId)]);
+        return view('pages.advert', ['advert' => Advert::findOrFail($advertId)]);
     }
 
     /**

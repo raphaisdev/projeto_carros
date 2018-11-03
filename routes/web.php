@@ -14,6 +14,8 @@ Route::get('/login', 'LoginController@index');
 Route::post('/login', 'LoginController@doLogin');
 Route::get('/logout', 'LoginController@logout');
 
+Route::post('/register', 'UserController@store');
+
 Route::get('/', 'AdvertController@index');
 Route::get('/{advertId}', 'AdvertController@show');
 

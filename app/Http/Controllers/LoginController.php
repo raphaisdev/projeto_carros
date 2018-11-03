@@ -10,7 +10,7 @@ class LoginController extends Controller
 {
     public function index()
     {
-        return view('layouts.login_template');
+        return view('pages.login');
     }
 
     function doLogin(Request $request)
