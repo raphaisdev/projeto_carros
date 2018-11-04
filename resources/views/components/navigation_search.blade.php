@@ -9,15 +9,14 @@
                 <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
             </li>
             @if(isset(Auth::user()->email))
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Criar Anuncio</a>
-            </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     {{Auth::user()->name}}
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/logout">Sair</a>
+                    <a class="dropdown-item" href="/advert/new"><i class="fas fa-ad"></i> Criar Anuncio</a>
+                    <a class="dropdown-item" href="/buy"><i class="fas fa-history"></i> Minhas Compras</a>
+                    <a class="dropdown-item" href="/logout"><i class="fas fa-sign-out-alt"></i> Sair</a>
                 </div>
             </li>
             @else
@@ -25,6 +24,11 @@
                 <a class="nav-link" href="/login">Cadastrar-se / Entrar</a>
             </li>
             @endif
+
+
+            <li class="nav-item">
+                <a class="nav-link" href="/cart"><i class="fas fa-shopping-cart"></i> Carrinho</a>
+            </li>
         </ul>
         <form class="form-inline mt-2 mt-md-0" method="get">
             @csrf

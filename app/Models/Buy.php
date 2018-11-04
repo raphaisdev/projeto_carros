@@ -20,7 +20,7 @@ class Buy extends Model
      */
     protected $guarded = [];
 
-    public function user(){
+    public function advert(){
         return $this->belongsTo(Advert::class);
     }
 

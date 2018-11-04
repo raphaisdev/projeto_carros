@@ -16,6 +16,12 @@ Route::get('/logout', 'LoginController@logout');
 
 Route::post('/register', 'UserController@store');
 
-Route::get('/', 'AdvertController@index');
+Route::get('/cart', 'CartController@index');
+Route::post('/cart', 'CartController@store');
+Route::delete('/cart/{id}', 'CartController@destroy');
+
+Route::post('/buy', 'BuyController@store');
+
 Route::get('/{advertId}', 'AdvertController@show');
+Route::get('/', 'AdvertController@index');
 

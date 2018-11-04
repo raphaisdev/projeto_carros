@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Advert;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      *
@@ -14,17 +16,13 @@ class CartController extends Controller
      */
     public function index()
     {
-        //
-    }
+        $adverts = [];
+        $sessionIds = Session::get('cart', []);
+        if($sessionIds!=[]){
+            $adverts = Advert::whereIn('id', $sessionIds)->get();
+        }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return view('pages.cart')->with(['adverts'=> $adverts]);
     }
 
     /**
@@ -35,41 +33,27 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $advert = Advert::find($request->input('advert_id'));
+        $error = null;
+        if(!$advert){
+           $error = ['O anuncío não foi encontrado.'];
+        }
+        if($advert->status=='1'){
+            $error = ['O veículo está reservado.'];
+        }
+        if($advert->status=='2'){
+            $error = ['O veículo já foi vendido.'];
+        }
+        if($error!=null){
+            return redirect('/cart')->withErrors($error);
+        }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+        $request->session()->push('cart', $advert->id);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+        $advert->status = '1';
+        $advert->save();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+        return redirect('/cart');
     }
 
     /**
@@ -80,6 +64,12 @@ class CartController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $advertIds = Session::get('cart', []);
+        if(count($advertIds) > 0){
+            $advertIds = array_diff($advertIds, [$id]);
+            Advert::where('id', $id)->update(['status'=>0]);
+        }
+        Session::put('cart', $advertIds);
+        return redirect('/cart');
     }
 }
