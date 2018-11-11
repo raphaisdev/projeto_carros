@@ -19,4 +19,8 @@ class CarModel extends Model
      * @var array
      */
     protected $guarded = [];
+
+    public function brand(){
+        return $this->belongsTo(CarBrand::class, 'car_brand_id', 'id');
+    }
 }

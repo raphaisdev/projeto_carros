@@ -60,6 +60,10 @@
                       <input type="text" name="name" class="form-control" />
                   </div>
                   <div class="form-group">
+                      <label>Telefone:</label>
+                      <input type="text" name="phone" class="form-control" />
+                  </div>
+                  <div class="form-group">
                       <label>E-mail:</label>
                       <input type="email" name="email" class="form-control" />
                   </div>

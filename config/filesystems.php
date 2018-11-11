@@ -64,6 +64,11 @@ return [
             'url' => env('AWS_URL'),
         ],
 
+        'public_adverts' => [
+            'driver' => 'local',
+            'root'   => public_path() . '/',
+        ],
+
     ],
 
 ];

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Advert;
 use App\Models\User;
 use Auth;
 use Illuminate\Http\Request;
@@ -20,13 +21,15 @@ class UserController extends Controller
         $register = $this->validate($request, [
             'name' => 'required|string|between:3,50',
             'email'   => 'required|email|unique:users',
-            'password'  => 'required|confirmed|alphaNum|between:3,30'
+            'password'  => 'required|confirmed|alphaNum|between:3,30',
+            'phone' => ['required', 'regex:/^(?:(?:\+|00)?\d{2}\s?)?(?:\(?([\d][\d])\)?\s?)?(?:((?:9\d|[2-9])\d{3})\-?(\d{4}))$/']
         ]);
 
         User::create([
             'name'=>$request->input('name'),
             'email'=>$request->input('email'),
-            'password'=> Hash::make($request->input('password'))]);
+            'password'=> Hash::make($request->input('password'))
+        ]);
 
         $user_data = array(
             'email'  => $request->get('email'),
@@ -84,5 +87,21 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    /**
+     * List adverts created by logged user
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function adverts()
+    {
+        if(!\Auth::check()){
+            return redirect('/');
+        }
+        $adverts = Advert::where('user_id', auth()->user()->id)->with('model.brand');
+
+        return view('pages.advert_list', ['adverts' => $adverts->paginate(9), 'search' => false]);
     }
 }

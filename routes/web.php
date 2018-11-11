@@ -22,6 +22,14 @@ Route::delete('/cart/{id}', 'CartController@destroy');
 
 Route::post('/buy', 'BuyController@store');
 
+Route::get('/user/adverts', 'UserController@adverts');
+
+Route::get('/advert/new', 'AdvertController@create');
+Route::post('/advert/new', 'AdvertController@store');
+Route::get('/advert/edit/{advert}', 'AdvertController@edit');
+Route::put('/advert/edit/{advert}', 'AdvertController@update');
+Route::delete('/advert/remove/{advert}', 'AdvertController@destroy');
+
 Route::get('/{advertId}', 'AdvertController@show');
 Route::get('/', 'AdvertController@index');
 

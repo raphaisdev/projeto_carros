@@ -19,4 +19,8 @@ class CarBrand extends Model
      * @var array
      */
     protected $guarded = [];
+
+    public function models(){
+        return $this->HasMany(CarModel::class, 'car_brand_id', 'id');
+    }
 }

@@ -22,7 +22,7 @@ class CreateAdvertsTable extends Migration
             $table->double('value', 10, 2)->nullable();
             $table->string('year',9);
             $table->string('color');
-            $table->string('picture');
+            $table->string('picture')->nullable();
             $table->enum('status', [0,1,2])
                 ->default(0)
                 ->comment('0=scrap, 1=active, 2=sold');

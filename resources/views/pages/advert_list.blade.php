@@ -2,6 +2,14 @@
 
 @section('content')
 
+    @if($search==true)
+    <form class="form-inline mt-2 mt-md-0" method="get">
+        @csrf
+        <input class="form-control mr-sm-2" name="search" type="text" placeholder="Busca" aria-label="Busca">
+        <button class="btn btn-primary my-2 my-sm-0" type="submit">Buscar</button>
+    </form>
+    @endif
+
     @forelse ($adverts as $advert)
         @if ($loop->first)
             <div class="card-deck">
@@ -10,14 +18,14 @@
                 <div class="card">
                     <img class="card-img-top" src="{{$advert->picture}}" alt="{{$advert->title}}">
                     <div class="card-body">
-                        <h5 class="card-title"><small class="text-muted">Ano: </small>{{$advert->year}} / <small class="text-muted">Cor: </small>{{$advert->color}}
+                        <h6 class="card-title"><small class="text-muted">Modelo: </small>{{ucfirst($advert->model->name)}} / <small class="text-muted">Marca: </small>{{$advert->model->brand->name}} / <small class="text-muted">Ano: </small>{{$advert->year}} / <small class="text-muted">Cor: </small>{{ucfirst($advert->color)}}
                         @if ($advert->status==1)
                                 <span class="badge badge-info" data-toggle="tooltip" data-placement="top" title="Você ainda pode ver, mas não comprar o veículo"><i class="fas fa-info-circle"></i> Reservado</span>
                         @endif
                         @if ($advert->status==2)
                             <span class="badge badge-success" data-toggle="tooltip" data-placement="top" title="Você ainda pode ver, mas não comprar o veículo"><i class="fas fa-money-bill-wave-alt"></i> Vendido</span>
                         @endif
-                        </h5>
+                        </h6>
                         <p class="card-text">{{$advert->title}}</p>
                     </div>
                     <div class="card-footer">
@@ -33,6 +41,8 @@
 
                 @if($loop->last)
             </div>
+
+            <div class="justify-content-center ">{{ $adverts->links() }}</div>
         @endif
 
     @empty
