@@ -15,7 +15,7 @@ $factory->define(App\Models\Advert::class, function (Faker $faker) {
         'value' => $faker->randomFloat(2,1000,1000000),
         'year' => $faker->year('now'),
         'color' => $faker->colorName(),
-        'picture' => $faker->imageUrl(640,480),
+        'picture' => '/adverts/mock.jpg',
         'status'=> $faker->randomElement([0,1,2])
     ];
 });

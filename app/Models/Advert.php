@@ -27,4 +27,8 @@ class Advert extends Model
     public function model(){
         return $this->belongsTo(CarModel::class, 'car_model_id', 'id');
     }
+
+    public function buy(){
+        return $this->hasOne(Buy::class, 'advert_id', 'id');
+    }
 }

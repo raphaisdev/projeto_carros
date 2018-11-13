@@ -6,6 +6,7 @@ use App\Models\Advert;
 use App\Models\CarBrand;
 use App\Models\CarModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class AdvertController extends Controller
 {
@@ -23,7 +24,7 @@ class AdvertController extends Controller
                 ->orWhere('description', 'like', '%'.$request->input('search').'%');
         }
 
-        return view('pages.advert_list', ['adverts' => $adverts->paginate(9), 'search' => true]);
+        return view('pages.advert_list', ['adverts' => $adverts->paginate(9), 'search' => true, 'title' => null]);
     }
 
     /** =x
@@ -139,6 +140,46 @@ class AdvertController extends Controller
         if(!\Auth::check()){
             return redirect('/');
         }
+        $anoAtual = date('Y');
+        $this->validate($request, [
+            'title' => 'required|string|between:3,190',
+            'description'   => 'required|string|between:3,500',
+            'car_model_id'  => 'required|exists:car_models,id',
+            'color' => 'required|string|between:3,30',
+            'year' => 'required|integer|between:1900,{$anoAtual}',
+            'value' => 'required|string',
+            'picture' => 'file|image|dimensions:min_width=320,min_height=240'
+        ]);
+
+        $advert = Advert::where('user_id', auth()->user()->id)->where('status', 0)->where('id', $id)->first();
+        if(!$advert){
+            return back();
+        }
+
+        $advert->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'car_model_id' => $request->car_model_id,
+            'year' => $request->year,
+            'color' => $request->color,
+            'value' => $request->value
+        ]);
+
+        if ($request->file('picture') && $request->file('picture')->isValid()) {
+
+            if ($advert->picture != '/adverts/mock.jpg') {
+                $advert->picture = preg_replace('/.*\/(.*?)\//', '', $advert->picture);
+                Storage::delete('adverts/' . $advert->picture);
+            }
+
+            $extension = $request->picture->extension();
+            $nameFile = "{$advert->id}.{$extension}";
+            $upload = $request->picture->storeAs('adverts', $nameFile);
+            $advert->picture = url($upload);
+            $advert->save();
+        }
+
+        return redirect('/'.$id);
     }
 
     /**
@@ -157,7 +198,10 @@ class AdvertController extends Controller
         if(!$advert){
             return back();
         }
-
+        if($advert->picture!='/adverts/mock.jpg'){
+            $advert->picture = preg_replace('/.*\/(.*?)\//', '', $advert->picture);
+            Storage::delete('adverts/' . $advert->picture);
+        }
         $advert->delete();
 
         return redirect('/user/adverts');

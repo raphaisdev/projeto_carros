@@ -19,18 +19,22 @@
             @if(isset(Auth::user()->email))
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{Auth::user()->name}}
+                       Olá {{Auth::user()->name}}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="/advert/new"><i class="fas fa-ad"></i> Criar Anúncio</a>
                         <a class="dropdown-item" href="/user/adverts"><i class="fas fa-bookmark"></i> Meus Anuncios</a>
-                        <a class="dropdown-item" href="/buy"><i class="fas fa-history"></i> Minhas Compras</a>
+                        <a class="dropdown-item" href="/user/buys"><i class="fas fa-history"></i> Minhas Compras</a>
+                        <a class="dropdown-item" href="/user/edit"><i class="fas fa-user"></i> Meus dados</a>
                         <a class="dropdown-item" href="/logout"><i class="fas fa-sign-out-alt"></i> Sair</a>
                     </div>
                 </li>
             @else
                 <li class="nav-item">
-                    <a class="nav-link" href="/login">Cadastrar-se / Entrar</a>
+                    <a class="nav-link" href="/login"><i class="fas fa-sign-in-alt"></i> Entrar</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/register"><i class="fas fa-user-plus"></i> Registrar-se</a>
                 </li>
             @endif
 

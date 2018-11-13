@@ -2,6 +2,18 @@
 
 @section('content')
     <h5>Meu Anúncio</h5>
+
+    @if (count($errors) > 0)
+        <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <ul>
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
       <form method="post" action={{ $action }} enctype="multipart/form-data">
           @if( $method!='POST')
               {{ method_field($method) }}
@@ -13,7 +25,8 @@
           </div>
           <div class="form-group">
               <label>Descrição:</label>
-              <textarea type="text" name="description" class="form-control" required rows="5">{{ old('description', $advert->description) }}</textarea>
+                  <textarea type="text" name="description" id="textareaLimited" class="form-control" required rows="5" maxlength="500">{{ old('description', $advert->description) }}</textarea>
+              <h6 class="pull-right" id="count_message"></h6>
           </div>
           <div class="form-group">
               <label>Marca / Modelo:</label>
@@ -52,7 +65,7 @@
               <input type="file" name="picture" class="form-control-file" accept="image/x-png,image/gif,image/jpeg" />
           </div>
           <div class="form-group">
-              <button type="submit" name="login" class="btn btn-primary"><i class="fas fa-ad"></i> Cadastrar Anúncio</button>
+              <button type="submit" name="login" class="btn btn-primary"><i class="fas fa-ad"></i> Salvar Anúncio</button>
           </div>
       </form>
 

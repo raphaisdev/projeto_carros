@@ -10,12 +10,16 @@
     </form>
     @endif
 
+    @if($title!=null)
+        <h4 class="display-4">{{ $title }}</h4>
+    @endif
+
     @forelse ($adverts as $advert)
         @if ($loop->first)
             <div class="card-deck">
                 @endif
 
-                <div class="card">
+                <div class="card mb-4" style="max-width: 33%">
                     <img class="card-img-top" src="{{$advert->picture}}" alt="{{$advert->title}}">
                     <div class="card-body">
                         <h6 class="card-title"><small class="text-muted">Modelo: </small>{{ucfirst($advert->model->name)}} / <small class="text-muted">Marca: </small>{{$advert->model->brand->name}} / <small class="text-muted">Ano: </small>{{$advert->year}} / <small class="text-muted">Cor: </small>{{ucfirst($advert->color)}}
@@ -47,7 +51,7 @@
 
     @empty
         <div class="alert alert-info text-center" role="alert">
-            <i class="fas fa-exclamation-circle"></i> Nenhum anúncio encontrado.
+            <i class="fas fa-exclamation-circle"></i> Nenhum item encontrado.
         </div>
         <br><br>
     @endforelse

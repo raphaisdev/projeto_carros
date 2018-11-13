@@ -14,7 +14,11 @@ Route::get('/login', 'LoginController@index');
 Route::post('/login', 'LoginController@doLogin');
 Route::get('/logout', 'LoginController@logout');
 
+Route::get('/register', 'UserController@index');
 Route::post('/register', 'UserController@store');
+Route::get('/user/edit', 'UserController@edit');
+Route::put('/user/edit', 'UserController@update');
+Route::delete('/user/remove', 'UserController@destroy');
 
 Route::get('/cart', 'CartController@index');
 Route::post('/cart', 'CartController@store');
@@ -23,6 +27,7 @@ Route::delete('/cart/{id}', 'CartController@destroy');
 Route::post('/buy', 'BuyController@store');
 
 Route::get('/user/adverts', 'UserController@adverts');
+Route::get('/user/buys', 'UserController@buys');
 
 Route::get('/advert/new', 'AdvertController@create');
 Route::post('/advert/new', 'AdvertController@store');

@@ -30,7 +30,7 @@ class LoginController extends Controller
             return redirect('/');
         }
 
-        return back()->withErrors(['Usuário ou senha incorretos.'], 'login');
+        return back()->withErrors(['Usuário ou senha incorretos.']);
     }
 
     function logout()

@@ -57,7 +57,15 @@
 <script>
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
-    })
+    });
+
+    var text_max = $('#textareaLimited').attr('maxlength');
+    $('#count_message').html(text_max + ' caracteres sobrando');
+    $('#textareaLimited').keyup(function() {
+        var text_length = $('#textareaLimited').val().length;
+        var text_remaining = text_max - text_length;
+        $('#count_message').html(text_remaining + ' caracteres sobrando');
+    });
 </script>
 </body>
 </html>
